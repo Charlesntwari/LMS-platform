@@ -11,7 +11,6 @@ export const Sidebar =() =>
             <div>
                 <SidebarRoutes/>
             </div>
-            sidebar!
         </div>
     )
 }
