@@ -4,7 +4,7 @@ import Link from "next/link"
 const CoursesPage = () => {
     return ( 
         <div className="p-6">
-            <Link href="/teacher/courses/create">
+            <Link href="/teacher/create">
                 <Button>
                     Add course
                 </Button>

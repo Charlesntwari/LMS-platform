@@ -38,9 +38,15 @@ const CreatePage = () => {
   const { isSubmitting, isValid } = form.formState
   const onSubmit = async ( values: z.infer <typeof formSchema>) => {
     try{
-       const response = await axios.post("api/courses", values)
-       router.push(`/teacher/courses/${response.data.id}`)
-       toast.success("course created")
+        const response = await axios.post("/api/courses", values)
+        if (response.data.id) {
+            router.push(`/teacher/courses/${response.data.id}`)
+            toast.success("course created")
+        }
+
+       else {
+        toast.error("Failed to create course");
+      }
     }
 
     catch{
@@ -80,13 +86,11 @@ const CreatePage = () => {
                                 Cancel
                             </Button>
                         </Link>
-                        <Link href="/">
-                            <Button
-                            type="submit"
-                            disabled={!isValid || isSubmitting}>
-                                Continue
-                            </Button>
-                        </Link>
+                        <Button
+                        type="submit"
+                        disabled={!isValid || isSubmitting}>
+                            Continue
+                        </Button>
                     </div> 
                 </form>
             </Form>
