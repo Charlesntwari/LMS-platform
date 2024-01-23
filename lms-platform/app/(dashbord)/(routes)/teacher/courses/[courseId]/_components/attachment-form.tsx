@@ -11,7 +11,7 @@ import { Course } from "@prisma/client"
 import Image from "next/image"
 import { FileUpload } from "@/components/file-upload"
 
-interface ImageFormProps {
+interface AttachmentFormProps {
     initialData:Course 
     courseId: string
 }
@@ -22,7 +22,7 @@ const formSchema = z.object({
     }),
   })
 
-const ImageForm = ({initialData, courseId}: ImageFormProps) => {
+const AttachmentForm = ({initialData, courseId}: AttachmentFormProps) => {
 
     const [isEditing,setEditing] = useState(false)
     const toggleEdit = () => setEditing((current) => !current)
@@ -100,4 +100,4 @@ const ImageForm = ({initialData, courseId}: ImageFormProps) => {
     );
 }
  
-export default ImageForm;
+export default AttachmentForm;

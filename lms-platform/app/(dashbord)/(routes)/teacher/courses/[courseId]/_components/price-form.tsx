@@ -8,6 +8,7 @@ import toast from "react-hot-toast"
 import { useRouter } from "next/navigation"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { Button } from "@/components/ui/button"
+import { Input } from "@/components/ui/input"
 import { Pencil } from "lucide-react"
 import {
     Form,
@@ -18,20 +19,18 @@ import {
 } from "@/components/ui/form"
 import { cn } from "@/lib/utils"
 import { Course } from "@prisma/client"
-import { Combobox } from "@/components/ui/combobox"
+import { formatPrice } from "@/lib/format"
 
-interface CategoryFormProps {
+interface PriceFormProps {
     initialData:Course
     courseId: String
-    options: {label: string, value: string}[]
 }
 
 const formSchema = z.object({ 
-    categoryId: z.string().min(1, {
-    }),
+    price: z.coerce.number()
   })
 
-const CategoryForm = ({initialData, courseId, options}: CategoryFormProps) => {
+const PriceForm = ({initialData, courseId}: PriceFormProps) => {
 
     const [isEditing,setEditing] = useState(false)
     const toggleEdit = () => setEditing((current) => !current)
@@ -40,7 +39,7 @@ const CategoryForm = ({initialData, courseId, options}: CategoryFormProps) => {
     const form = useForm<z.infer<typeof formSchema>>({
         resolver: zodResolver(formSchema),
         defaultValues: {
-            categoryId: initialData?.categoryId || " "
+            price: initialData?.price || undefined
         },
     })
 
@@ -57,26 +56,24 @@ const CategoryForm = ({initialData, courseId, options}: CategoryFormProps) => {
          }
     }
 
-    const selectedOption = options.find((option) => option.value === initialData.categoryId)
-
     return ( 
         <div className="mt-6 border bg-slate-100 rounded-md p-4">
             <div className="font-medium flex items-center justify-between mb-4">
-                <span>Course category</span>
+                <span>Course price</span>
                 <Button onClick={toggleEdit} variant="ghost">
                     {isEditing ? (
                         <>Cancel</>
                     ) : (
                         <>
                         <Pencil className="h-4 w-4 mr-2" />
-                        Edit category
+                        Edit price
                         </>
                     )}
                 </Button>
             </div>
             {!isEditing &&(
-                <p className={cn("text-sx mt-2",!initialData.categoryId && "test-slate-500 italic")}>
-                   {selectedOption?.label || "No category"}
+                <p className={cn("text-sx mt-2",!initialData.price && "test-slate-500 italic")}>
+                   {initialData.price? formatPrice(initialData.price) : "No price"}
                 </p>
             )}
             {isEditing && (
@@ -84,12 +81,15 @@ const CategoryForm = ({initialData, courseId, options}: CategoryFormProps) => {
                 <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4 mt-4">
                     <FormField
                     control={form.control}
-                    name="categoryId"
+                    name="price"
                     render={({ field }) => (
                         <FormItem>
                         <FormControl>
-                            <Combobox
-                              options = {...options}
+                            <Input
+                              type="number" 
+                              step="0.01"
+                              disabled={isSubmitting}
+                              placeholder=" set course price"
                               {...field}
                             />
                         </FormControl>
@@ -114,4 +114,4 @@ const CategoryForm = ({initialData, courseId, options}: CategoryFormProps) => {
     );
 }
  
-export default CategoryForm;
+export default PriceForm;

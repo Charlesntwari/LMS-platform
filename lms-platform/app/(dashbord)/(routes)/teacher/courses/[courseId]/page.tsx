@@ -5,6 +5,9 @@ import TitleForm from "./_components/title-form"
 import DescriptionForm from "./_components/description-form"
 import ImageForm from "./_components/image-form";
 import CategoryForm from "./_components/category-form";
+import { File, ListChecks } from "lucide-react";
+import { CircleDollarSign } from "lucide-react"
+import PriceForm from "./_components/price-form";
 
 const CourseIdPage = async ({
     params
@@ -81,6 +84,34 @@ const CourseIdPage = async ({
                         value: category.id
                       }))}
                     />
+                </div>
+                <div className="space-y-6">
+                    <div className="flex items-center gap-x-2">
+                        <ListChecks/>
+                        <h2 className="text-xl">
+                            Course chapters
+                        </h2>
+                    </div>
+                    <div>
+                        TODO: Chapters
+                    </div>
+                    <div className="flex items-center gap-x-2">
+                        <CircleDollarSign/>
+                        <h2 className="text-xl">
+                            Sell your chapters
+                        </h2>
+                    </div>
+                    <PriceForm
+                      initialData = {course}
+                      courseId = {course.id}
+                    />
+                       <div className="flex items-center gap-x-2">
+                        <File/>
+                        <h2 className="text-xl">
+                            Resources & Attachments
+                        </h2>
+                    </div>
+
                 </div>
             </div>
         </div>
