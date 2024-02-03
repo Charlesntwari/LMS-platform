@@ -6,20 +6,17 @@ import axios from "axios"
 import toast from "react-hot-toast"
 import { useRouter } from "next/navigation"
 import { Button } from "@/components/ui/button"
-import { ImageIcon, Pencil, PlusCircle } from "lucide-react"
-import { Course } from "@prisma/client"
-import Image from "next/image"
+import { PlusCircle } from "lucide-react"
+import { Attachment, Course } from "@prisma/client"
 import { FileUpload } from "@/components/file-upload"
 
 interface AttachmentFormProps {
-    initialData:Course 
+    initialData:Course & { attachments: Attachment[] }
     courseId: string
 }
 
 const formSchema = z.object({ 
-    imageUrl: z.string().min(1, {
-      message: "Image is required please!.",
-    }),
+     Url: z.string().min(1),
   })
 
 const AttachmentForm = ({initialData, courseId}: AttachmentFormProps) => {
@@ -30,7 +27,7 @@ const AttachmentForm = ({initialData, courseId}: AttachmentFormProps) => {
 
     const onSubmit = async ( values: z.infer <typeof formSchema>) => {
         try{
-            const response = await axios.patch(`/api/courses/${courseId}`, values)
+            const response = await axios.post(`/api/courses/${courseId}/attachemnts`, values)
                 toast.success("course updated")
                 toggleEdit()
                 router.refresh()
@@ -43,54 +40,40 @@ const AttachmentForm = ({initialData, courseId}: AttachmentFormProps) => {
     return ( 
         <div className="mt-6 border bg-slate-100 rounded-md p-4">
             <div className="font-medium flex items-center justify-between mb-4">
-                <span>Course Image</span>
+                <span>Course Attachments</span>
                 <Button onClick={toggleEdit} variant="ghost">
                     {isEditing && (
                         <>Cancel</>
                     )}
-                    {!isEditing && (!initialData.imageUrl &&(
+                    {!isEditing && (
                         <>
-                        <PlusCircle className="h-4 w-4 mr-2" />
-                        Add an image
+                            <PlusCircle className="h-4 w-4 mr-2" />
+                            Add file
                         </>
-                    )
-                    )}
-                    {!isEditing && (initialData.imageUrl &&(
-                        <>
-                        <Pencil className="h-4 w-4 mr-2" />
-                        Edit an image
-                        </>
-                    )
                     )}
                 </Button>
             </div>
-            {!isEditing &&  (!initialData.imageUrl ? (
-                <div className="flex items-center justify-center h-60 bg-slate-200 rounded-md">
-                   <ImageIcon className="h-10 w-10 text-slate-500"/>
-                </div>
-            ):(
-                <div className="relative aspect-video mt-2">
-                    <Image 
-                      alt="Upload"
-                      fill
-                      className="object-cover rounded-md"
-                      src={initialData.imageUrl}
-                    />
-                </div>
-            )
+            {!isEditing &&  (
+                <>
+                   {initialData.attachments.length === 0 && (
+                        <p className="text-sm mt-2 text-slate-500 italic">
+                           No attachments yet
+                        </p>
+                    )}
+                </>                
             )}
             {isEditing && (
                 <div>
                     <FileUpload
-                       endpoint="courseImage"
+                       endpoint="courseAttachment"
                        onChange={(url) =>{
                         if (url){
-                            onSubmit({ imageUrl: url})
+                            onSubmit({ Url: url})
                         }
                        }}
                     />
                     <div className="text-xs text-muted-foreground mt-4">
-                      16:9 aspect ratio recommended
+                      add all necessary files to complete this course.
                     </div>
                 </div>
 
