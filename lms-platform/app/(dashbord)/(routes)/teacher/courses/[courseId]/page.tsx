@@ -103,7 +103,7 @@ const CourseIdPage = async ({
                 </div>
                 <div className="space-y-6">
                     <div className="flex items-center gap-x-2">
-                        <ListChecks/>
+                        <ListChecks className="text-sky-600"/>
                         <h2 className="text-xl">
                             Course chapters
                         </h2>
@@ -113,7 +113,7 @@ const CourseIdPage = async ({
                       courseId = {course.id}
                     />
                     <div className="flex items-center gap-x-2">
-                        <CircleDollarSign/>
+                        <CircleDollarSign className="text-sky-600"/>
                         <h2 className="text-xl">
                             Sell your chapters
                         </h2>

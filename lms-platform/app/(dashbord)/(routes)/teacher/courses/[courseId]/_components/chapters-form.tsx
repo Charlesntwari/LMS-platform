@@ -8,8 +8,7 @@ import toast from "react-hot-toast"
 import { useRouter } from "next/navigation"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { Button } from "@/components/ui/button"
-import { Textarea } from "@/components/ui/textarea"
-import { Pencil, PlusCircle } from "lucide-react"
+import { PlusCircle } from "lucide-react"
 import {
     Form,
     FormControl,
@@ -20,6 +19,7 @@ import {
 import { cn } from "@/lib/utils"
 import { Chapter, Course } from "@prisma/client"
 import { Input } from "@/components/ui/input"
+import { ChaptersList } from "./chapters-list"
 
 interface ChapterFormProps {
     initialData:Course & {chapters: Chapter[]}
@@ -108,6 +108,11 @@ const ChapterForm = ({initialData, courseId}: ChapterFormProps) => {
                !initialData.chapters.length && "text-slate-500 italic"
                )}>
                 {!initialData.chapters.length && "No Chapters"}
+                <ChaptersList
+                  onEdit = {() => {}}
+                  onReorder = {() => {}}
+                  items = {initialData.chapters || []}
+                />
                </div>
             )}
             {!isCreating &&(
