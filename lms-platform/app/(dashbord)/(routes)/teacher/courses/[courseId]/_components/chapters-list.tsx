@@ -35,11 +35,11 @@ export const ChaptersList = ({
         setChapters(items)
     }, [items])
 
-    ondragend = (result: DropResult) =>{
+    const onDragEnd = (result: DropResult) =>{
         if(!result.destination) return;
 
         const items = Array.from(chapters)
-        const [reorderedItem] = items.splice(result.source.index,1);
+        const [reorderedItem] = items.splice(result.source.index, 1);
         items.splice(result.destination.index, 0, reorderedItem)
 
         const startIndex = Math.min(result.source.index, result.destination.index)
@@ -53,6 +53,7 @@ export const ChaptersList = ({
             id: chapter.id,
             position: items.findIndex((item)=> item.id ===chapter.id)
         }))
+        onReorder(bulkUpdateData)
     }
 
     if (!isMounted){
@@ -60,7 +61,7 @@ export const ChaptersList = ({
     }
 
     return(
-        <DragDropContext ondragend={ondragend}>
+        <DragDropContext onDragEnd={onDragEnd}>
             <Droppable droppableId="chapters">
                 {(provided) =>(
                     <div {...provided.droppableProps} ref={provided.innerRef}>
