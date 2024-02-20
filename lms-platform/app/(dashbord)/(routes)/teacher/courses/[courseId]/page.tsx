@@ -5,7 +5,7 @@ import TitleForm from "./_components/title-form"
 import DescriptionForm from "./_components/description-form"
 import ImageForm from "./_components/image-form";
 import CategoryForm from "./_components/category-form";
-import { File, ListChecks } from "lucide-react";
+import { File, LayoutDashboard, ListChecks } from "lucide-react";
 import { CircleDollarSign } from "lucide-react"
 import PriceForm from "./_components/price-form";
 import AttachmentForm from "./_components/attachment-form";
@@ -76,6 +76,7 @@ const CourseIdPage = async ({
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-16">
                 <div>
                     <div className="flex items-center gap-x-2">
+                        <LayoutDashboard className="text-sky-600"/>
                         <h2 className="text-xl">
                             Customize your course
                         </h2>
