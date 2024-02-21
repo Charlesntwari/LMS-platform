@@ -68,13 +68,13 @@ const ChapterIdPage =  async(
                             <h2 className="text-xl">
                                 customize your Chapter
                             </h2>
-                            <div>
-                                <ChapterTitleForm
-                                    initialData={chapter}
-                                    courseId={params.courseId}
-                                    chapterId={params.chapterId}
-                                />
-                            </div>
+                        </div>
+                        <div>
+                            <ChapterTitleForm
+                                initialData={chapter}
+                                courseId={params.courseId}
+                                chapterId={params.chapterId}
+                            />
                         </div>
                     </div>
                 </div>

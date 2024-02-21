@@ -27,9 +27,7 @@ interface ChapterTitleFormProps {
 }
 
 const formSchema = z.object({ 
-    title: z.string().min(1, {
-      message: "Title is required please!.",
-    }),
+    title: z.string().min(1),
   })
 
 const ChapterTitleForm = ({
@@ -89,7 +87,7 @@ const ChapterTitleForm = ({
                         <FormControl>
                             <Input
                             disabled={isSubmitting}
-                            placeholder="e.g: advanced C++"
+                            placeholder="introduction of this course"
                             {...field}
                             />
                         </FormControl>
