@@ -3,7 +3,7 @@ import { redirect } from "next/navigation";
 
 import { db } from "@/lib/db";
 import Link from "next/link";
-import { ArrowLeft, Eye, LayoutDashboard } from "lucide-react";
+import { ArrowLeft, Eye, LayoutDashboard, Video } from "lucide-react";
 import ChapterTitleForm from "./_components/chapter-title-form";
 import ChapterDescriptionForm from "./_components/chapter-description-form";
 import ChapterAccessForm from "./_components/chapter-access-form";
@@ -95,6 +95,12 @@ const ChapterIdPage =  async(
                             courseId={params.courseId}
                             chapterId={params.chapterId}
                         />
+                        <div className="flex items-center gap-x-2 mt-4">
+                            <Video className="text-sky-600"/>
+                            <h2 className="text-xl">
+                                Add a Video
+                            </h2>
+                        </div>
                          <ChapterVideoForm
                             initialData={chapter}
                             courseId={params.courseId}
