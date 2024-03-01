@@ -9,6 +9,7 @@ import { Button } from "@/components/ui/button"
 import { Pencil, PlusCircle } from "lucide-react"
 import { Chapter, MuxData } from "@prisma/client"
 import { FileUpload } from "@/components/file-upload"
+import Image from "next/image"
 
 interface ChapterVideoProps {
     initialData: Chapter & {muxData?: MuxData | null}

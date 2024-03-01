@@ -5,6 +5,7 @@ import { NextResponse } from "next/server"
 import { db } from "@/lib/db";
 
 const { Video } = new Mux(
+    
     process.env.MUX_TOKEN_ID!,
     process.env.MUX_TOKEN_SECRET!,
 )
@@ -114,12 +115,12 @@ export async function PATCH(
           return new NextResponse("Unauthorized", { status: 401 });
         }
 
-        const Chapter = await db.chapter.update({
+        const chapter = await db.chapter.update({
             where: {
                 id: params.chapterId,
                 courseId: params.courseId
             },
-            data:{
+            data: {
                 ...values
             }
         })
@@ -139,7 +140,7 @@ export async function PATCH(
                     }
                 })
             }
-            const asset= await Video.Assets.create({
+            const asset = await Video.Assets.create({
                 input: values.videoUrl,
                 playback_policy: "public",
                 test: false
@@ -154,7 +155,7 @@ export async function PATCH(
             })
         }
 
-        return NextResponse.json(Chapter)
+        return NextResponse.json(chapter)
 
     } catch (error) {
        console.log("COURSES_CHAPTER_ID",error)
