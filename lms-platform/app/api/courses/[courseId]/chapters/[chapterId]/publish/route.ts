@@ -31,9 +31,6 @@ export async function PATCH(
         id: params.chapterId,
         courseId: params.courseId,
       },
-      data: {
-        ...values,
-      },
     });
 
     const muxData = await db.muxData.findUnique({
@@ -55,6 +52,24 @@ export async function PATCH(
             isPublished: true,
         }
     })
+
+    const publishedChapterInCourse = await db.chapter.findMany({
+        where:{
+            courseId: params.courseId,
+            isPublished: true
+        }
+    })
+
+    if (!publishedChapterInCourse.length){
+        await db.course.update({
+            where: {
+                id: params.courseId,
+            },
+            data: {
+                isPublished: false
+            }
+        })
+    }
 
     return NextResponse.json(publishedChapter);
   } catch (error) {
