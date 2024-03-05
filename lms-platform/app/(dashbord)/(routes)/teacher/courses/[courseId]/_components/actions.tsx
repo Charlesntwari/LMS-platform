@@ -5,8 +5,9 @@ import axios from "axios"
 import { useRouter } from "next/navigation"
 import { Button } from "@/components/ui/button"
 import { Trash } from "lucide-react"
-import { ConfirmModal } from "@/components/modal/confirm-modal"
+import { ConfirmModal } from "@/components/modals/confirm-modal"
 import toast from "react-hot-toast"
+import { useConfettiStore } from "@/hooks/use-confetti-store"
 
 
 
@@ -21,8 +22,34 @@ export const Actions = ({
     courseId,
     isPublished
 }:ActionsProps) => {
+    const confetti = useConfettiStore()
     const [isLoading, setIsLoading] = useState(false)
     const router = useRouter()
+
+     const onClick = async () =>{
+        try {
+            setIsLoading(true)
+            if(isPublished){
+                await axios.patch(`/api/courses/${courseId}/unpublish`)                
+                toast.success("Course unpublished")
+            }
+
+            else{
+                await axios.patch(`/api/courses/${courseId}/publish`)            
+                toast.success("Course published")
+                confetti.onOpen()
+            }
+            
+            router.refresh()
+            
+        } catch {
+            toast.error("something went wrong")    
+        }
+        finally{
+            setIsLoading(false)
+        }
+    }
+
 
     const onDelete = async () => {
         try {
@@ -43,7 +70,7 @@ export const Actions = ({
     return (
         <div className="flex items-center gap-x-2">
             <Button
-                onClick={() => {}}
+                onClick={onClick}
                 disabled={disabled || isLoading}
                 variant="outline"
                 size="sm">

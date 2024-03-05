@@ -2,11 +2,12 @@ import './globals.css'
 import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
 import { ClerkProvider } from '@clerk/nextjs'
-import { ToastProvider } from './provider/toast-provider'
+import { ToastProvider } from '../components/provider/toast-provider'
 import { NextSSRPlugin } from "@uploadthing/react/next-ssr-plugin";
 import { extractRouterConfig } from "uploadthing/server";
  
 import { ourFileRouter } from "@/app/api/uploadthing/core";
+import { ConfettiProvider } from '@/components/provider/confetti-provider'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -27,6 +28,7 @@ export default function RootLayout({
         <NextSSRPlugin
           routerConfig={extractRouterConfig(ourFileRouter)}
         />
+          <ConfettiProvider/>
           <ToastProvider/>
           {children}
         </body>
