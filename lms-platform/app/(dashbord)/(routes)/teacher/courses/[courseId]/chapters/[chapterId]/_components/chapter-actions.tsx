@@ -5,7 +5,7 @@ import axios from "axios"
 import { useRouter } from "next/navigation"
 import { Button } from "@/components/ui/button"
 import { Trash } from "lucide-react"
-import { ConfirmModal } from "@/components/modal/confirm-modal"
+import { ConfirmModal } from "@/components/modals/confirm-modal"
 import toast from "react-hot-toast"
 
 
