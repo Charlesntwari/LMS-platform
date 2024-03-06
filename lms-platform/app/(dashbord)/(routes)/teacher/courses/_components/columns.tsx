@@ -2,8 +2,11 @@
 
 import { Course } from "@prisma/client"
 import { ColumnDef } from "@tanstack/react-table"
-import { ArrowUpDown, MoreHorizontal } from "lucide-react"
+import { ArrowUpDown, MoreHorizontal, Pencil } from "lucide-react"
 import { Button } from "@/components/ui/button"
+import { DropdownMenuArrow } from "@radix-ui/react-dropdown-menu"
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
+import Link from "next/link"
 export type Payment = {
   id: string
   amount: number
@@ -54,4 +57,28 @@ export const columns: ColumnDef<Course>[] = [
         )
     },
   },
+  {
+    id: "actions",
+    cell: ({row}) => {
+        const { id } = row.original
+
+        return(
+            <DropdownMenu>
+                <DropdownMenuTrigger>
+                    <Button variant="ghost" className="h-4 w-4 p-0">
+                        <span className="sr-only">Open menu</span>
+                        <MoreHorizontal/>
+                    </Button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent>
+                    <Link href={`/teacher/courses/${id}`}>
+                        <DropdownMenuItem>
+                            <Pencil className="h-4 w-4 mr-2"/>Edit
+                        </DropdownMenuItem>
+                    </Link>
+                </DropdownMenuContent>
+            </DropdownMenu>
+        )
+    }
+  }
 ]
