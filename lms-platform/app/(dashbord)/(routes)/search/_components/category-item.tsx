@@ -2,9 +2,9 @@ import { cn } from "@/lib/utils"
 import { IconType } from "react-icons"
 
 interface CategoryItemProps {
-    label: string
-    icon: IconType
-    value: string
+    label: string;
+    icon: IconType;
+    value: string;
 }
 
 export const CategoryItem = ({
